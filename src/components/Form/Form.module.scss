@@ -1,0 +1,19 @@
+.page{
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+}
+.form{
+    display:grid;
+    column-gap: 48px;
+    grid-template-columns: 1fr 1fr;
+    //width: 100%;
+}    
+.fields{
+    text-align: center;
+}
+.checkbox{
+    height: 30px;
+    margin: 0px 5px 0px 0px;
+}
+

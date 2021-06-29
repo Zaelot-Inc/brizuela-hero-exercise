@@ -1,0 +1,54 @@
+.inputCheckbox{
+    height: 60px;
+    width: 100%;
+    margin-top: 20px;
+}
+.box{
+  display: inline-flex;
+  flex-direction: row;
+
+  
+}
+.unchecked{
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    margin-right: 20px;
+    padding: 2px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #cfe7e5;
+    background-color: #fdfdfd;
+}
+
+.checked{
+    width: 25px;
+    height: 25px;
+    background-color: rgb(114, 9, 128);
+    margin-right: 20px;
+    padding: 2px;
+}
+.imgCheck{
+    
+    filter: brightness(0) invert(1)
+}
+
+.error{
+
+    font-family: 'Open Sans';    
+    letter-spacing: 1px;
+    margin: 0;
+    color: #ee4266;
+    font-weight: 600;
+    font-size: 14px;
+}
+.label{
+    color: grey;
+    text-align: left;
+    font-family: 'Open Sans';
+    letter-spacing: 1px;
+    margin: 0;
+    color: #404040;
+    font-weight: 600;
+    font-size: 14px;
+}
