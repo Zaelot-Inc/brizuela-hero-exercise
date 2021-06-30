@@ -38,7 +38,7 @@ function Form(){
         lastName:'',
         email:'',
         organization:'',
-        resident:{label:'- SELECT ONE -', value:undefined},
+        resident:{value:undefined, label:'- SELECT ONE -'},
         advances:true,
         alerts:true,
         other:false

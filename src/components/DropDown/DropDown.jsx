@@ -1,6 +1,7 @@
 import React,{useRef,useEffect,useState} from 'react';
 import style from './dropdown.module.scss';
 import chevron from '../../assets/text-expand-arrow.svg';
+
 const DropDown = props =>{
 
     const ref = useRef();
@@ -24,6 +25,8 @@ const DropDown = props =>{
     const handleValidation=(value)=>{
         if(value.value === null){
            setError({value:true, msg:'This value is required'}) 
+        }else{
+            setError({value:false, msg:''}) 
         }
     }
 
