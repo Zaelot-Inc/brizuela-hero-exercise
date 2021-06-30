@@ -1,0 +1,54 @@
+@import 'variables';
+
+$breakpoint-tablet: 768px;
+@media (min-width: $breakpoint-tablet) {
+  
+}
+
+Body{
+  background: url('../assets/texture.png') no-repeat center center fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.App {
+  min-height: 100%;
+  padding: 5% 20%;
+}  
+
+.AppHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%; 
+}
+
+
+.title{  
+  margin: 0;
+  color: #000000;
+}
+
+.subtitle{
+  margin-top: 20px;  
+  letter-spacing: 1px;
+  margin: 0;
+  color: #404040;
+  font-weight: normal;
+  font-size: 18px;
+}
+
+.AppLink {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
