@@ -13,74 +13,144 @@ const emailValidations = [
     "email",
 ];
 
+
+const fields = {
+    FIRST_NAME:'firstName',
+    LAST_NAME:'lastName',
+    EMAIL:'email',
+    ORGANIZATION:'organization',
+    RESIDENT:'resident',
+    ADVANCES:'advances',
+    OTHERS:'others',
+    ALERTS:'alerts'
+}
+
+const residentOptions=[
+    {
+        value:true,
+        label:'YES'
+    },
+    {
+        value:false,
+        label:'NO'
+    }
+];
+
+
+const resetForm = {
+    firstName:'',
+    lastName:'',
+    email:'',
+    organization:'',
+    resident:{value:undefined, label:'- SELECT ONE -'},
+    advances:true,
+    alerts:true,
+    other:false
+};
+
+const config = [
+    {
+        field:fields.FIRST_NAME,
+        required: true,
+        type:'text',
+    },
+    {
+        field:fields.LAST_NAME,
+        required: true,
+        type:'text',
+    },
+    {
+        field:fields.EMAIL,
+        required: true,
+        type:'text',
+    },
+    {
+        field:fields.ORGANIZATION,
+        required: true,
+        type:'text',
+    },
+    {
+        field:fields.ADVANCES,
+        required: true,
+        type:'boolean',
+    },
+    {
+        field:fields.ALERTS,
+        required: true,
+        type:'boolean',
+    },
+    {
+        field:fields.RESIDENT,
+        required: true,
+        type:'objBoolean',
+    },
+];
+
+
+
+
 function Form(){
-    const [formValue,setFormValue] = useState({})    
+    const [formValue,setFormValue] = useState(resetForm);    
     const [errorFields, setErrorFields] = useState([]);
     
     const handleChange= (name,value) =>{        
         setFormValue({...formValue, [name]:value });
     }
 
-    const residentOptions=[
-        {
-            value:true,
-            label:'YES'
-        },
-        {
-            value:false,
-            label:'NO'
+    const validateForm = (form, config)=>{
+        let forceFailForm ={};
+        let isValid = true;
+        config.forEach(item => {
+            if(item.required){
+                if(form[item.field] == '' && item.type === 'text'){                    
+                    forceFailForm[item.field]=null;
+                    isValid = false;
+                }
+                if(item.type === 'boolean'){                    
+                    forceFailForm[item.field]= form[item.field]? form[item.field] : false;
+                    isValid = form[item.field]? form[item.field] : false;
+                }
+                if(item.type === 'objBoolean' ){
+                    if(form[item.field].value === undefined){
+                        forceFailForm[item.field]= {value:null, label:'- SELECT ONE -'};
+                        isValid = false;
+                    }else{
+                        forceFailForm[item.field]= form[item.field]; 
+                    }                                        
+                }
+            }
+        });
+
+        if(Object.keys(forceFailForm).length > 0){
+            setFormValue({...forceFailForm});            
         }
-    ];
+        return isValid;
+        
+    };
+    const handleSubmit=()=> {             
+        if(validateForm(formValue,config)){
+            console.log('CALL TO API');
+            console.log(formValue);                                 
+        };                                      
+    }; 
 
-
-    const resetForm = {
-        firstName:'',
-        lastName:'',
-        email:'',
-        organization:'',
-        resident:{value:undefined, label:'- SELECT ONE -'},
-        advances:true,
-        alerts:true,
-        other:false
-    }
-
-
-    const defaultForm = {
-        firstName:null,
-        lastName:null,
-        email:null,
-        organization:null,
-        resident:{label:'- SELECT ONE -', value:null},
-        advances:false,
-        alerts:false,
-        other:false
-    }
-    const handleSubmit=()=> {     
-        if(Object.keys(formValue).length === 0){
-            setFormValue({...defaultForm});
-        }    
-        console.log(formValue);                                 
-    } 
-
-    const handleReset=()=>{
-       // console.log(formValue)
-        setFormValue(resetForm);
-        console.log(formValue);
-    }
+    const handleReset=()=>{       
+        setFormValue(resetForm);                        
+    };
 
 
     return(      
         <div className={style.page}>                                
             <form  className={style.form}>            
             <TextField
-            name='firstName'
+            name={fields.FIRST_NAME}
             value={formValue.firstName}
             onChange={handleChange}
             label="First name"
             validations={validations}                              
             />
             <TextField      
-            name='lastName'  
+            name={fields.LAST_NAME}  
             value={formValue.lastName}
             onChange={handleChange}
             label="Last name"
@@ -88,7 +158,7 @@ function Form(){
             />
             
             <TextField 
-            name='email'  
+            name={fields.EMAIL}  
             value={formValue.email}     
             onChange={handleChange}
             label="Email address"
@@ -96,7 +166,7 @@ function Form(){
             
             />
             <TextField   
-            name='organization'  
+            name={fields.ORGANIZATION}  
             value={formValue.organization}   
             onChange={handleChange}
             label="Organization"
@@ -104,7 +174,7 @@ function Form(){
             />
 
             <DropDown
-            name='resident'  
+            name={fields.RESIDENT}  
             value={formValue.resident} 
             options={residentOptions}  
             onChange={handleChange}
@@ -115,21 +185,22 @@ function Form(){
             <div />
             <Checkbox
                 onChange={handleChange}
-                name='advances'
+                name={fields.ADVANCES}
                 value={formValue.advances}
                 required={true}
                 label='Advances'                  
             />
             <Checkbox
                 onChange={handleChange}
-                name='alerts'
+                name={fields.ALERTS}
                 label='Alerts' 
                 required={true}    
                 value={formValue.alerts}                      
             />
             <Checkbox
                 onChange={handleChange}
-                name='other'
+                name={fields.OTHERS}
+                required={false}
                 label='Other Comunications' 
                 value={formValue.other}                            
             />    
@@ -141,7 +212,7 @@ function Form(){
                 <button onClick={handleReset} className={style.btnReset}>RESET</button>
             </div>     
         </div>
-    )
+    );
     
 };
 

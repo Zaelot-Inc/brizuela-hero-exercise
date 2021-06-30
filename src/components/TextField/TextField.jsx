@@ -3,14 +3,11 @@ import style from './TextField.module.scss';
 
 const basicValidation = (validator, value) => {
     const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const minRe = /min:[0-9]+$/;
-    const maxRe = /max:[0-9]+$/;
     switch (validator) {
       case "required":
         return value.length > 0 ? "" : "This value is required";
       case "email":
         return emailRe.test(value) ? "" : "Please enter a valid email";
-     
       default:
         return "";
     }
@@ -37,12 +34,16 @@ const TextField = props => {
         const validator = props.validations[i];
         if (typeof validator === "string")
             validationRes = basicValidation(validator,value);
+            if(validationRes.length > 1 ){
+                setErrorMsg(validationRes);
+                setClassInput(classNamesField.Error)
+            }else{
+                setErrorMsg('');                
+                setClassInput(classNamesField.Field)
+            }  
         if (validationRes) break;
         }        
-        if(validationRes.length > 0 ){
-            setErrorMsg(validationRes);
-            setClassInput(classNamesField.Error)
-        }                
+                      
     };
 
 

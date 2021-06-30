@@ -33,6 +33,7 @@ const DropDown = props =>{
 
     useEffect(()=>{
         handleValidation(props.value)
+        props.onChange(props.name, props.value)
     },[props.value])
 
 
