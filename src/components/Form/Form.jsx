@@ -1,11 +1,11 @@
 import { React, useState } from 'react';
 import TextField from '../TextField/TextField';
+import DropDown from '../DropDown/DropDown';
 import Checkbox from '../Checkbox/Checkbox';
 import style from './Form.module.scss';
 
 const validations = [
     "required",
-    "min:4",
 ];
 
 const emailValidations = [
@@ -21,20 +21,32 @@ function Form(){
         setFormValue({...formValue, [name]:value });
     }
 
+    const residentOptions=[
+        {
+            value:true,
+            label:'YES'
+        },
+        {
+            value:false,
+            label:'NO'
+        }
+    ];
+
     const defaultForm = {
-        firstName:'asd',
-        lastName:'asd',
-        email:'asd',
-        organization:'asd',
+        firstName:null,
+        lastName:null,
+        email:null,
+        organization:null,
+        resident:{label:'- SELECT ONE -', value:undefined},
         advances:false,
         alerts:false,
         other:false
     }
     const handleSubmit=()=> {     
         if(Object.keys(formValue).length === 0){
-            setFormValue(...defaultForm);
+            setFormValue({...defaultForm});
         }
-        setFormValue(defaultForm);
+        //setFormValue(defaultForm);
         console.log(formValue);                                 
     } 
 
@@ -72,6 +84,16 @@ function Form(){
             label="Organization"
             validations={validations}                 
             />
+
+            <DropDown
+            name='resident'  
+            value={formValue.resident} 
+            options={residentOptions}  
+            onChange={handleChange}
+            value={formValue.resident? formValue.resident : {value:null, label:'- SELECT ONE -'}}
+            label="Resident"
+            validations={validations}                 
+            />
             
             <Checkbox
                 onChange={handleChange}
@@ -93,11 +115,12 @@ function Form(){
                 label='Other Comunications' 
                 value={formValue.other}                            
             />    
+                   
+        </form>
+
             <div className={style.buttonSection}>
                 <button onClick={handleSubmit}>Send</button>
-            </div>         
-        </form>
-                  
+            </div>     
         </div>
     )
     

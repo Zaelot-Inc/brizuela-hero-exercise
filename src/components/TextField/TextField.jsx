@@ -7,19 +7,11 @@ const basicValidation = (validator, value) => {
     const maxRe = /max:[0-9]+$/;
     switch (validator) {
       case "required":
-        return value.length > 0 ? "" : "This value is required";
+          const result = value && value.length > 0 ? "" : "This value is required"
+        return result ? result : "This value is required";
       case "email":
         return emailRe.test(value) ? "" : "Please enter a valid email";
-      case minRe.test(value):
-        const min = value.split(":")[1];
-        return value.length >= min
-          ? ""
-          : `This value needs to be at least ${min} characters`;
-      case maxRe.test(value):
-        const max = value.split(":")[1];
-        return value.length <= max
-          ? ""
-          : `This value cannot be more than ${min} characters`;
+     
       default:
         return "";
     }
@@ -35,21 +27,23 @@ const classNamesField = {
 const TextField = props => {
     const [value, setValue] = useState(props.value);
     const [errorMsg, setErrorMsg] = useState('');
-    const [isTouchedOnce, setTouchedOnce] = useState(false);
+    const [isTouchedOnce, setTouchedOnce] = useState(null);
     const [isBlurred, setBlurred] = useState(false);
     const [classInput, setClassInput] = useState(classNamesField.Field)
 
-    const runValidations = (value) => {
-        
+    const runValidations = (value) => {        
         if (!isTouchedOnce) return;
         let validationRes;
         for (let i = 0; i < props.validations.length; i++) {
         const validator = props.validations[i];
         if (typeof validator === "string")
             validationRes = basicValidation(validator,value);
-        if (validationRes) break;
-        }
-        setErrorMsg(validationRes);
+        //if (validationRes) break;
+        }        
+        if(validationRes.length > 0 ){
+            setErrorMsg(validationRes);
+            setClassInput(classNamesField.Error)
+        }                
     };
 
 
@@ -81,9 +75,14 @@ const TextField = props => {
 
 
     useEffect(()=>{
-        runValidations(value);
-    },[value])
-        const shouldDisplayError = isTouchedOnce && isBlurred;
+        if(props.value === null){
+            setErrorMsg('This value is required');
+            setClassInput(classNamesField.Error)
+        }
+    },props.value);
+
+
+        const shouldDisplayError = errorMsg || isTouchedOnce && isBlurred;
         return (
         <div key={props.name} className={style.formField}>
             <div className={style.errorSection}>
