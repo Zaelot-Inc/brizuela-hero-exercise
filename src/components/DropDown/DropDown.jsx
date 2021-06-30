@@ -1,4 +1,4 @@
-import React,{useRef,useState} from 'react';
+import React,{useRef,useEffect,useState} from 'react';
 import style from './dropdown.module.scss';
 import chevron from '../../assets/text-expand-arrow.svg';
 const DropDown = props =>{
@@ -6,7 +6,8 @@ const DropDown = props =>{
     const ref = useRef();
     const base = useRef();
     const [open, setOpen] = useState(undefined);
-    const [error, setError] = useState('');
+    const [error, setError] = useState({value:false, msg:''})
+    
 
     const toggleOpen = () => {
         if (open === undefined) {
@@ -20,12 +21,24 @@ const DropDown = props =>{
         props.onChange(props.name, value)
     }  
 
+    const handleValidation=(value)=>{
+        if(value.value === null){
+           setError({value:true, msg:'This value is required'}) 
+        }
+    }
+
+
+    useEffect(()=>{
+        handleValidation(props.value)
+    },[props.value])
+
+
     return (
         <div className={style.DropDown}>
-            <span className={style.Error}></span>
+            <span className={style.Error}>{error.msg}</span>
             <label className={style.Label}>{props.label}</label>
             <div className={style.SelectContainer}>
-                <div className={style.Select}
+                <div className={error.value? style.SelectError : style.Select}
                     ref={ref}
                     open={open}
                     error={error}                    

@@ -32,12 +32,25 @@ function Form(){
         }
     ];
 
+
+    const resetForm = {
+        firstName:'',
+        lastName:'',
+        email:'',
+        organization:'',
+        resident:{label:'- SELECT ONE -', value:undefined},
+        advances:true,
+        alerts:true,
+        other:false
+    }
+
+
     const defaultForm = {
         firstName:null,
         lastName:null,
         email:null,
         organization:null,
-        resident:{label:'- SELECT ONE -', value:undefined},
+        resident:{label:'- SELECT ONE -', value:null},
         advances:false,
         alerts:false,
         other:false
@@ -45,10 +58,15 @@ function Form(){
     const handleSubmit=()=> {     
         if(Object.keys(formValue).length === 0){
             setFormValue({...defaultForm});
-        }
-        //setFormValue(defaultForm);
+        }    
         console.log(formValue);                                 
     } 
+
+    const handleReset=()=>{
+       // console.log(formValue)
+        setFormValue(resetForm);
+        console.log(formValue);
+    }
 
 
     return(      
@@ -90,11 +108,11 @@ function Form(){
             value={formValue.resident} 
             options={residentOptions}  
             onChange={handleChange}
-            value={formValue.resident? formValue.resident : {value:null, label:'- SELECT ONE -'}}
+            value={formValue.resident? formValue.resident : {value:undefined, label:'- SELECT ONE -'}}
             label="Resident"
             validations={validations}                 
             />
-            
+            <div />
             <Checkbox
                 onChange={handleChange}
                 name='advances'
@@ -119,7 +137,8 @@ function Form(){
         </form>
 
             <div className={style.buttonSection}>
-                <button onClick={handleSubmit}>Send</button>
+                <button onClick={handleSubmit} className={style.btnSubmit}>SUBMIT</button>
+                <button onClick={handleReset} className={style.btnReset}>RESET</button>
             </div>     
         </div>
     )

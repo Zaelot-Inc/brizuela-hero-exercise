@@ -1,14 +1,18 @@
 .inputCheckbox{
     height: 60px;
     width: 100%;
-    margin-top: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
 }
+
 .box{
   display: inline-flex;
   flex-direction: row;
-
-  
 }
+
 .unchecked{
     width: 25px;
     height: 25px;
@@ -24,20 +28,26 @@
 .checked{
     width: 25px;
     height: 25px;
-    background-color: rgb(114, 9, 128);
+    background-color: purple;
     margin-right: 20px;
     padding: 2px;
 }
+
+.errorCheck{
+    width: 25px;
+    height: 25px;    
+    margin-right: 20px;
+    padding: 2px;
+    background-color: #f18ea3;
+}
 .imgCheck{
-    
     filter: brightness(0) invert(1)
 }
 
 .error{
-
     font-family: 'Open Sans';    
     letter-spacing: 1px;
-    margin: 0;
+    //margin: 0;
     color: #ee4266;
     font-weight: 600;
     font-size: 14px;

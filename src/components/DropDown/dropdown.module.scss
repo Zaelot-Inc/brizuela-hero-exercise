@@ -40,6 +40,39 @@
     }  
 }
 
+.SelectError {
+    width: 100%;
+    max-width: 500px;
+    height: 48px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #cfe7e5;
+    background-color: #f18ea3;
+    cursor: pointer;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .imgOpen {
+        transition: transform .2s ease;
+        width: 8px;
+        transform: rotate(90deg);
+      }
+    .imgClosed {
+    transition: transform .2s ease;
+    width: 8px;
+    }  
+}
+
+.Error{
+    font-family: 'Open Sans';    
+    letter-spacing: 1px;
+    margin: 0;
+    color: #ee4266;
+    font-weight: 600;
+    font-size: 14px;
+}
 .TextValue {
     font-family: 'Open Sans';
     letter-spacing: 1px;
@@ -56,6 +89,7 @@
     font-weight: 600;
     font-size: 14px;
 }
+
 .OptionContainer{
     top: 48px;
     position: absolute;

@@ -7,8 +7,7 @@ const basicValidation = (validator, value) => {
     const maxRe = /max:[0-9]+$/;
     switch (validator) {
       case "required":
-          const result = value && value.length > 0 ? "" : "This value is required"
-        return result ? result : "This value is required";
+        return value.length > 0 ? "" : "This value is required";
       case "email":
         return emailRe.test(value) ? "" : "Please enter a valid email";
      
@@ -38,7 +37,7 @@ const TextField = props => {
         const validator = props.validations[i];
         if (typeof validator === "string")
             validationRes = basicValidation(validator,value);
-        //if (validationRes) break;
+        if (validationRes) break;
         }        
         if(validationRes.length > 0 ){
             setErrorMsg(validationRes);
@@ -79,7 +78,13 @@ const TextField = props => {
             setErrorMsg('This value is required');
             setClassInput(classNamesField.Error)
         }
-    },props.value);
+        if(props.value === ''){
+            setErrorMsg('');
+            setValue('')
+            setClassInput(classNamesField.Field)
+        }
+       
+    },[props.value]);
 
 
         const shouldDisplayError = errorMsg || isTouchedOnce && isBlurred;
